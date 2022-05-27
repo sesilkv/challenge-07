@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <div>
         <div className={styles.navbar}>
-            <div className={styles.logo}>Logo</div>
+            <div className={styles.logo}>FEJS2</div>
             <div>
                 <ul className={styles.list}>
                     <li className={styles.item}><Link href="/">Home</Link></li>
