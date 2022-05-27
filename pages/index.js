@@ -3,12 +3,13 @@ import Head from 'next/head'
 import axios from 'axios'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/dist/client/router'
 import styles from '../styles/card.module.css'
 import { Card } from 'react-bootstrap'
 
 export default function Home() {
   const [students, setStudents] = useState([])
+  const router = useRouter()
 
   var imageSize ={
     width:"400px", height:"400px"
@@ -16,13 +17,12 @@ export default function Home() {
 
   useEffect( () => {
     axios.get('https://fejs-c7-api.herokuapp.com/api/students/?populate=*')
-  .then( res => {
-    console.log(res)
+  .then( (res) => {
     setStudents([...res.data.data])
   })
   })
 
-  const router = useRouter()
+  
 
   return (
     <div>
@@ -33,18 +33,19 @@ export default function Home() {
       </Head>
       <div className={styles.card}>
         <div className={styles.wrapper}>
-        {students.map((student, id) => {
+        {students.map((student) => {
+          const id = student.id
             return(
               <div className={styles.dataCard} key={student.id}>
                 <div className="row">
                   <div className="col">
-                      <Card style={{width:'20rem'}} onClick={ () => router.push(`/student/${id}`)}>
+                      <Card style={{width:'20rem'}}>
+                      <Zoom>
                       { student.attributes.photo.data !== null &&
-                            <Zoom>
-                              <img className="card-img-top img-thumbnail"src={student.attributes.photo.data.attributes.url} style={imageSize}/>
-                            </Zoom>
+                              <img className="card-img-top img-thumbnail" src={student.attributes.photo.data.attributes.url} style={imageSize}/>
                           }
-                          <Card.Body>
+                          </Zoom>
+                          <Card.Body onClick={()=>router.push(`/students/${id}`)}>
                             <Card.Text>First Name: {student.attributes.firstname}</Card.Text>
                             <Card.Text>Last Name: {student.attributes.lastname}</Card.Text>
                             <Card.Text>Location: {student.attributes.location}</Card.Text>

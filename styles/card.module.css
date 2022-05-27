@@ -14,3 +14,10 @@
     display: flex;
     padding: 20px;
 }
+
+.id {
+    align-items: center;
+    border: 2px solid rgb(147, 86, 86);
+    border-radius: 1rem;
+    padding: 10px;
+}
