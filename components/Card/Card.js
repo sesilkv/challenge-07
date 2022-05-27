@@ -1,13 +1,22 @@
 import React from 'react'
-import styles from '../../styles/card.module.css'
-import DataCard from './DataCard'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
-export default function Card() {
+export default function Card({Firstname, Lastname, Location, photo}) {
   return (
-    <div className={styles.card}>
-          <div className={styles.wrapper}>
-            <DataCard />
+    <>
+        <div className="card" style="width: 18rem;">
+                { photo !== null &&
+                  <Zoom>
+                        <img src={photo} width="200"/>
+                  </Zoom>
+                }
+            <div className="card-body">
+                <p className="card-text">First Name: {Firstname}</p>
+                <p className="card-text">Last Name: {Lastname}</p>
+                <p className="card-text">Location: {Location}</p>
+            </div>
         </div>
-    </div>
+      </>
   )
 }

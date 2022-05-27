@@ -14,43 +14,26 @@ export default function Student() {
         axios
             .get(`https://fejs-c7-api.herokuapp.com/api/students/${id}?populate=*`)
             .then((res) => {
-                setStudents(res.data.data)
-                console.log(res)
+                setStudents([...res.data.data])
             })
     }, [])
 
   return (
-    <div>
-        {students && (
             <div>
-                <div>
-                    <Zoom>
-                        {students.attributes.photo.data === null && (
-                            <img src="/image/duck.jpg" alt="student" width="100" />
-                        )}
-                        {students.attributes.photo.data !== null && (
-                            <img
-                            src={students.attributes.photo.data.attributes.url}
-                            alt="student"
-                            width="100"
-                            />
-                        )}
-                    </Zoom>
-                    <div>
-                        <div>First Name :</div>
-                        <div> {students.attributes.firstname}</div>
-                    </div>
-                    <div>
-                        <div>Last Name :</div>
-                        <div> {students.attributes.lastname}</div>
-                    </div>
-                    <div>
-                        <div>Location :</div>
-                        <div> {students.attributes.location}</div>
-                    </div>
-                </div>
+                {students.map((student) => {
+                    return(
+                        <div key={student.id}>
+                            <Zoom>
+                            <img src={student.attributes.photo.data.attributes.url} width="200"/>
+                            </Zoom>
+                            <ul>
+                            <li>First Name: {student.attributes.firstname}</li>
+                            <li>Last Name: {student.attributes.lastname}</li>
+                            <li>Location: {student.attributes.location}</li>
+                            </ul>
+                        </div>
+                    )
+                })}
             </div>
-        )}
-    </div>
   )
 }
